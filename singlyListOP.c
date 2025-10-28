@@ -1,33 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Structure for a node
+// Structure definition for a node
 struct Node
 {
     int data;
     struct Node *next;
 };
 
-struct Node *head = NULL; // Initially the list is empty
+struct Node *head = NULL; // Head pointer to start of the list
 
-// Function to create a new node
-struct Node *createNode(int value)
-{
-    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
-    newNode->data = value;
-    newNode->next = NULL;
-    return newNode;
-}
-
-// Function to insert at end
+// Function to insert a new node at the end
 void insertNode()
 {
     int value;
     printf("Enter value to insert: ");
     scanf("%d", &value);
 
-    struct Node *newNode = createNode(value);
+    // Create a new node directly here
+    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
 
+    // If the list is empty
     if (head == NULL)
     {
         head = newNode;
@@ -35,8 +30,12 @@ void insertNode()
     else
     {
         struct Node *temp = head;
+        // Traverse to the end of the list
         while (temp->next != NULL)
+        {
             temp = temp->next;
+        }
+        // Link new node to last node
         temp->next = newNode;
     }
     printf("Node inserted successfully!\n");
@@ -57,7 +56,7 @@ void deleteNode()
 
     struct Node *temp = head, *prev = NULL;
 
-    // If head node holds the value
+    // If node to be deleted is the head node
     if (temp != NULL && temp->data == value)
     {
         head = temp->next;
@@ -66,7 +65,7 @@ void deleteNode()
         return;
     }
 
-    // Search for the node to be deleted
+    // Traverse to find the node
     while (temp != NULL && temp->data != value)
     {
         prev = temp;
@@ -80,12 +79,13 @@ void deleteNode()
         return;
     }
 
+    // Unlink and free the node
     prev->next = temp->next;
     free(temp);
     printf("Node deleted successfully!\n");
 }
 
-// Function to traverse (display) the linked list
+// Function to display the list
 void displayList()
 {
     if (head == NULL)
@@ -104,7 +104,7 @@ void displayList()
     printf("NULL\n");
 }
 
-// Function to count nodes
+// Function to count total nodes
 void countNodes()
 {
     int count = 0;
@@ -156,6 +156,5 @@ int main()
             printf("Invalid choice! Try again.\n");
         }
     }
-
     return 0;
 }

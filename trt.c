@@ -1,109 +1,79 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 
-struct Node
-{
+struct Node {
     int data;
     struct Node *next;
+    struct Node *prev;
 };
 
-struct Node *top = NULL;
-void Push(int value)
+struct Node *head=NULL;
+struct Node *tail=NULL;
+
+insertfromBeg(int val)
 {
-    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
-    if (!newNode)
+    struct Node *newNode= (struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    newNode->next=newNode->prev=NULL;
+    if(head==NULL)
     {
-        printf("Stack OverFlow Condition!!!\n");
-        return;
+        head=tail=newNode;
     }
-    newNode->data = value;
-    newNode->next = top;
-    top = newNode;
-    printf("THe Value %d has been Inserted \n", value);
+    else{
+        newNode->next=head;
+        head->prev=newNode;
+        head=newNode;
+        printf("%d inserted\n",val);
+    }
 }
 
-void pop()
+insertfromend(int val)
 {
-    if (top == NULL)
+    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = val;
+    newNode->next = newNode->prev = NULL;
+    if (tail == NULL)
     {
-        printf("The Stack Is Empty\n");
+        head = tail = newNode;
+    }
+    else
+    {
+        newNode->prev = tail;
+        tail->next = newNode;
+        tail = newNode;
+        printf("%d inserted\n", val);
+    }
+}
+
+void deletefrombeg(){
+    if(head==NULL)
+    {
+        printf("List is Empty..\n");
         return;
     }
-    struct Node *temp = top;
-    printf("%d is poped from the stack\n", temp->data);
-    top = top->next;
+    struct Node *temp= head;
+    printf("%d is deleted",temp->data);
+    head= head->next;
+    if(head!=NULL)
+    head->prev=NULL;
+    else
+    tail=NULL;
     free(temp);
 }
 
-void display()
+void deletefromend()
 {
-    if (top == NULL)
+    if (tail == NULL)
     {
-        printf("The Stack Is Empty...\n");
+        printf("List is Empty..\n");
         return;
     }
-
-    struct Node *temp = top;
-    printf("THe elements of the Stack are :\n");
-    while (temp != NULL)
-    {
-        printf("%d ", temp->data);
-        temp = temp->next;
-    }
-    printf("\n");
-}
-
-void count()
-{
-    if (top == NULL)
-    {
-        printf("The stack Is Empty , Count = 0\n");
-        return;
-    }
-
-    struct Node *temp = top;
-    int count=0;
-    while (temp != NULL)
-    {
-        count++;
-        temp=temp->next;
-    }
-    printf("The Number OF elements are : %d",count);
-}
-int main()
-{
-    int val, ch;
-    while (1)
-    {
-        printf("\n++++++Singly Link List Using Stack +++++++++++\n\n");
-        printf("1.Insert(push)\n");
-        printf("2.Delete(pop)\n");
-        printf("3.Display\n");
-        printf("4.Count\n");
-        printf("5.Exit\n");
-        printf("Enter Your Choice!\n");
-        scanf("%d", &ch);
-        switch (ch)
-        {
-        case 1:
-            printf("Enter the Value TO Insert Into The Stack :\n");
-            scanf("%d", &val);
-            Push(val);
-            break;
-        case 2:
-            pop();
-            break;
-        case 3:
-            display();
-            break;
-        case 4:
-            count();
-            break;
-        case 5:
-            printf("exiting...");
-            exit(0);
-        default:
-            pritnf("Invalid CHoice, Try Again!!!");
-        }
-    }
+    struct Node *temp = tail;
+    printf("%d is deleted", temp->data);
+    tail = tail->prev;
+    if (tail != NULL)
+        tail->next = NULL;
+    else
+        head = NULL;
+    free(temp);
 }

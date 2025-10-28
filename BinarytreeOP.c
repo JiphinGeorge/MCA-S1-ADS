@@ -8,17 +8,13 @@ struct Node {
 
 struct Node* root = NULL;
 
-// Create new node
-struct Node* createNode(int value) {
-    struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
-    newNode->data = value;
-    newNode->left = newNode->right = NULL;
-    return newNode;
-}
+
 
 // Insert node (level order)
 void insert(int value) {
-    struct Node* newNode = createNode(value);
+    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->left = newNode->right = NULL;
     if (root == NULL) {
         root = newNode;
         return;
