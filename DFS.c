@@ -31,6 +31,7 @@ int main()
             scanf("%d", &a[i][j]);
         }
     }
+    
     for(i = 0; i < n; i++)
         visited[i] = 0;
 
