@@ -4,10 +4,8 @@
 #include <stdlib.h>
 
 #define MAX 10
-
 int parent[MAX];
 int cost[MAX][MAX];
-
 int find(int i)
 {
     while (parent[i] != i)
