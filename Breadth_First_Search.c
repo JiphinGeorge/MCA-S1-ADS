@@ -1,74 +1,69 @@
+//implement BFS algorithm
+
 #include <stdio.h>
-#define MAX 100 // Maximum number of vertices
 
-int queue[MAX];
-int front = -1, rear = -1;
+int a[20][20], visited[20], queue[20];
+int n, front = 0, rear = -1;
 
-void enqueue(int vertex)
+void bfs(int start)
 {
-    if (rear == MAX - 1)
-        printf("Queue Overflow\n");
-    else
-    {
-        if (front == -1)
-            front = 0;
-        queue[++rear] = vertex;
-    }
-}
-
-int dequeue()
-{
-    if (front == -1 || front > rear)
-        return -1;
-    return queue[front++];
-}
-
-// BFS Function
-void bfs(int adj[MAX][MAX], int n, int start)
-{
-    int visited[MAX] = {0};
     int i, v;
-
-    enqueue(start);
     visited[start] = 1;
+    queue[++rear] = start;
 
-    printf("BFS Traversal starting from vertex %d: ", start);
-
-    while (front <= rear)
+    while(front <= rear)
     {
-        v = dequeue();
+        v = queue[front++];
         printf("%d ", v);
 
-        for (i = 0; i < n; i++)
+        for(i = 0; i < n; i++)
         {
-            if (adj[v][i] == 1 && !visited[i])
+            if(a[v][i] == 1 && visited[i] == 0)
             {
-                enqueue(i);
                 visited[i] = 1;
+                queue[++rear] = i;
             }
         }
     }
-    printf("\n");
 }
 
-// Main Function
 int main()
 {
-    int adj[MAX][MAX], n, start;
-    int i, j;
+    int i, j, start;
 
     printf("Enter number of vertices: ");
     scanf("%d", &n);
 
     printf("Enter adjacency matrix:\n");
-    for (i = 0; i < n; i++)
-        for (j = 0; j < n; j++)
-            scanf("%d", &adj[i][j]);
+    for(i = 0; i < n; i++)
+    {
+        for(j = 0; j < n; j++)
+        {
+            scanf("%d", &a[i][j]);
+        }
+    }
 
-    printf("Enter starting vertex (0 to %d): ", n - 1);
+    for(i = 0; i < n; i++)
+        visited[i] = 0;
+
+    printf("Enter starting vertex: ");
     scanf("%d", &start);
 
-    bfs(adj, n, start);
+    printf("BFS Traversal: ");
+    bfs(start);
 
     return 0;
 }
+
+/*
+Enter number of vertices: 4
+Enter adjacency matrix:
+0 1 1 0
+1 0 0 1
+1 0 0 1
+0 1 1 0
+Enter starting vertex: 0
+
+Sample Output:
+BFS Traversal: 0 1 2 3
+*/
