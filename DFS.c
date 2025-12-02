@@ -1,5 +1,4 @@
 // Implement DFS algorithm
-
 #include <stdio.h>
 
 int visited[20], n;        // visited[] to track visited vertices, n = number of vertices
