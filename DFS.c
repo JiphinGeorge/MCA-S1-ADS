@@ -25,10 +25,8 @@ void dfs(int v)
 int main()
 {
     int i, j, start;
-
     printf("Enter number of vertices: ");
     scanf("%d", &n);       // Read the number of vertices
-
     printf("Enter the adjacency matrix:\n");
     for(i = 0; i < n; i++)        // Loop for rows
     {
@@ -37,7 +35,7 @@ int main()
             scanf("%d", &a[i][j]); // Read each value of adjacency matrix
         }
     }
-
+    
     // Initialize visited array to 0 (meaning unvisited)
     for(i = 0; i < n; i++)
         visited[i] = 0;

@@ -1,91 +1,75 @@
+// Single Linked List operations- Creation, Insertion, Deletion, Traversal, Count.
+
 #include <stdio.h>
 #include <stdlib.h>
 
-// Structure definition for a node
 struct Node
 {
     int data;
     struct Node *next;
 };
 
-struct Node *head = NULL; // Head pointer to start of the list
+struct Node *head = NULL;
 
-// Function to insert a new node at the end
-void insertNode()
+// Create a new node
+struct Node *createNode(int value)
 {
-    int value;
-    printf("Enter value to insert: ");
-    scanf("%d", &value);
-
-    // Create a new node directly here
     struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
     newNode->data = value;
     newNode->next = NULL;
+    return newNode;
+}
 
-    // If the list is empty
+// Insert at end
+void insertNode(int value)
+{
+    struct Node *newNode = createNode(value);
     if (head == NULL)
     {
         head = newNode;
+        return;
     }
-    else
-    {
-        struct Node *temp = head;
-        // Traverse to the end of the list
-        while (temp->next != NULL)
-        {
-            temp = temp->next;
-        }
-        // Link new node to last node
-        temp->next = newNode;
-    }
-    printf("Node inserted successfully!\n");
+    struct Node *temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+    temp->next = newNode;
 }
 
-// Function to delete a node by value
-void deleteNode()
+// Delete by value
+void deleteNode(int value)
 {
     if (head == NULL)
     {
         printf("List is empty!\n");
         return;
     }
-
-    int value;
-    printf("Enter value to delete: ");
-    scanf("%d", &value);
-
     struct Node *temp = head, *prev = NULL;
 
-    // If node to be deleted is the head node
-    if (temp != NULL && temp->data == value)
+    // If first node is to be deleted
+    if (head->data == value)
     {
-        head = temp->next;
+        head = head->next;
         free(temp);
-        printf("Node deleted successfully!\n");
         return;
     }
 
-    // Traverse to find the node
     while (temp != NULL && temp->data != value)
     {
         prev = temp;
         temp = temp->next;
     }
 
-    // If not found
     if (temp == NULL)
     {
-        printf("Value not found in list!\n");
+        printf("Value not found!\n");
         return;
     }
 
-    // Unlink and free the node
     prev->next = temp->next;
     free(temp);
-    printf("Node deleted successfully!\n");
 }
 
-// Function to display the list
+// Display list
 void displayList()
 {
     if (head == NULL)
@@ -93,9 +77,8 @@ void displayList()
         printf("List is empty!\n");
         return;
     }
-
     struct Node *temp = head;
-    printf("Linked List: ");
+    printf("List: ");
     while (temp != NULL)
     {
         printf("%d -> ", temp->data);
@@ -104,29 +87,26 @@ void displayList()
     printf("NULL\n");
 }
 
-// Function to count total nodes
+// Count nodes
 void countNodes()
 {
     int count = 0;
     struct Node *temp = head;
-
     while (temp != NULL)
     {
         count++;
         temp = temp->next;
     }
-
-    printf("Total number of nodes: %d\n", count);
+    printf("Total nodes = %d\n", count);
 }
 
 // Main function
 int main()
 {
-    int choice;
-
+    int choice, value;
     while (1)
     {
-        printf("\n--- Singly Linked List Operations ---\n");
+        printf("\n--- Singly Linked List Menu ---\n");
         printf("1. Insert Node\n");
         printf("2. Delete Node\n");
         printf("3. Display List\n");
@@ -138,10 +118,14 @@ int main()
         switch (choice)
         {
         case 1:
-            insertNode();
+            printf("Enter value: ");
+            scanf("%d", &value);
+            insertNode(value);
             break;
         case 2:
-            deleteNode();
+            printf("Enter value to delete: ");
+            scanf("%d", &value);
+            deleteNode(value);
             break;
         case 3:
             displayList();
@@ -150,11 +134,46 @@ int main()
             countNodes();
             break;
         case 5:
-            printf("Exiting program...\n");
             exit(0);
         default:
-            printf("Invalid choice! Try again.\n");
+            printf("Invalid choice!\n");
         }
     }
     return 0;
 }
+
+/* Sample Output:
+
+--- Singly Linked List Menu ---
+1. Insert Node
+2. Delete Node
+3. Display List
+4. Count Nodes
+5. Exit
+Enter your choice: 1
+Enter value: 10
+
+--- Singly Linked List Menu ---
+Enter your choice: 1
+Enter value: 20
+
+--- Singly Linked List Menu ---
+Enter your choice: 3
+List: 10 -> 20 -> NULL
+
+--- Singly Linked List Menu ---
+Enter your choice: 4
+Total nodes = 2
+
+--- Singly Linked List Menu ---
+Enter your choice: 2
+Enter value to delete: 10
+
+--- Singly Linked List Menu ---
+Enter your choice: 3
+List: 20 -> NULL
+
+--- Singly Linked List Menu ---
+Enter your choice: 5
+
+*/
