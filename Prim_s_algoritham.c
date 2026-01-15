@@ -6,7 +6,6 @@
 int main() {
     int n, cost[MAX][MAX], visited[MAX] = {0};
     int edges = 0, totalCost = 0, a, b, min;
-
     printf("Enter number of vertices: ");
     scanf("%d", &n);
 

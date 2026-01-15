@@ -1,11 +1,8 @@
 // Kruskal’s algorithm for finding the minimum cost spanning tree using Disjoint Set
-
 #include <stdio.h>
-
 #define MAX 10
 int parent[MAX];
 int cost[MAX][MAX];
-
 int find(int i)
 {
     while (parent[i] != i)

@@ -11,7 +11,6 @@ int main() {
 
     printf("Enter the number of vertices: ");
     scanf("%d", &n);
-
     printf("Enter the adjacency matrix (use 0 if there is no edge):\n");
     for (i = 0; i < n; i++) {
         for (j = 0; j < n; j++) {
@@ -21,11 +20,8 @@ int main() {
         }
         visited[i] = 0;
     }
-
     visited[0] = 1;  // Start from vertex 0
-
     printf("\nEdges in the Minimum Spanning Tree:\n");
-
     while (no_edges < n - 1) {
         min = INF;
         for (i = 0; i < n; i++) {
@@ -39,11 +35,9 @@ int main() {
                 }
             }
         }
-
         printf("%d - %d : %d\n", a, b, G[a][b]);
         visited[b] = 1;
         no_edges++;
     }
-
     return 0;
 }

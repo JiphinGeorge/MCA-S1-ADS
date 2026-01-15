@@ -1,132 +1,104 @@
-#include <stdlib.h>
 #include <stdio.h>
+#define MAX 20
 
-struct Node
+void display(int set[], int n, char universal[])
 {
-    int data;
-    struct Node *next;
-};
+    printf("{");
+    for (int i = 0; i < n; i++)
+    {
+        if (set[i] == 1)
+        {
+            printf("%c", universal[i]);
+        }
+    }
+    printf("}");
+}
 
-struct Node *head = NULL;
-
-createNode(int value )
+void unionset(int A[], int B[], int C[], int n)
 {
-    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
-    newNode->data = value;
-    newNode->next = NULL;
-    return newNode;
-}
-
-void insertNode(value){
-    struct Node *newNode = createNode(value);
-    if(head== NULL){
-        head = newNode;
-        return;
-    }
-    struct Node *temp = head;
-    while(temp->next!=NULL)
+    for (int i = 0; i < n; i++)
     {
-        temp = temp->next;
-    }
-    temp->next = newNode;
-}
-
-void deleteNode(value){
-   
-    if(head==NULL){
-        printf("The lit is empty");
-        return;
-    }
-
-    struct Node *temp = head, *prev = NULL;
-
-    if(head->data==value)
-    {
-
-        head = head->next;
-        free(temp);
-        return;
-    }
-
-    while(temp->data!=value && temp!=NULL)
-    {
-        prev = temp;
-        temp = temp->next;
-    }
-
-    if(temp==NULL)
-    {
-        printf("Value not found");
-
-    }
-    prev->next = temp->next;
-    free(temp);
-
-    
-}
-
-void displayList(){
-    if(head==NULL)
-    {
-        printf("The list is Empty !");
-        return;
-    }
-    struct Node *temp = head;
-
-    printf("List:");
-    while(temp!=NULL)
-    {
-        printf("%d ->", temp->data);
-        temp = temp->next;
+        C[i] = A[i] | B[i];
     }
 }
 
-void countNodes(){
-    if(head==NULL)
+void intersection(int A[], int B[], int C[], int n)
+{
+    for (int i = 0; i < n; i++)
     {
-        printf("0");
-        return;
+        C[i] = A[i] & B[i];
     }
-    int count = 0;
-    struct Node *temp = head;
-    while(temp!=NULL)
-    {
-        count++;
-        temp = temp->next;
+}
 
+void difference(int A[], int B[], int C[], int n)
+
+{
+    for (int i = 0; i < n;i++)
+    {
+        C[i] = A[i] & (!B[i]);
     }
-    printf("the total count is  %d", count);
 }
 int main()
 {
-    int ch, value;
-    while (1)
+    int n, i;
+    char universal[MAX];
+    printf("Enter the Number of elements in the Universal Set:");
+    scanf("%d", &n);
+
+    printf("Enter the elements of the Universal Set:\n");
+    for (i = 0; i < n; i++)
     {
-        printf("\n1.Insert Node \2,delete Node \n33.display \n4.Count \n 5.exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &ch);
-        switch (ch)
+        scanf(" %c", &universal[i]);
+    }
+
+    int A[MAX] = {0}, B[MAX] = {0}, C[MAX] = {0}, SizeA, SizeB;
+    printf("Enter the Number of Elements in the set A :");
+    scanf("%d", &SizeA);
+    printf("enter the elemtns in the set A :");
+    for (i = 0; i < SizeA; i++)
+    {
+        char x;
+        scanf(" %c",&x);
+        for (int j = 0; j < n; j++)
         {
-        case 1:
-            printf("Enter the value to insert :");
-            scanf("%d", &value);
-            insertNode(value);
-            break;
-        case 2:
-            printf("Enter the value to delete :");
-            scanf("%d", &value);
-            deleteNode(value);
-            break;
-        case 3:
-            displayList();
-            break;
-        case 4:
-            countNodes();
-            break;
-        case 5:
-            exit(0);
-        default:
-            printf("Invalid choice! Please try again.\n");
+            if (universal[j] == x)
+            {
+                A[j] = 1;
+            }
         }
     }
+    printf("Enter the Number of elements in the set B:");
+    scanf("%d", &SizeB);
+    printf("Enter the elements in the set B:");
+    for (i = 0; i < SizeB; i++)
+    {
+        char x;
+        scanf(" %c", &x);
+        for (int j = 0; j < n; j++)
+        {
+            if (universal[j] == x)
+            {
+                B[j] = 1;
+            }
+        }
+    }
+
+    printf("set a:");
+    display(A, n, universal);
+    printf("Set B:");
+    display(B, n, universal);
+
+    unionset(A, B, C,n);
+    printf("AuB :");
+    display(C, n, universal);
+
+    intersection(A, B, C, n);
+    printf("AnB :");
+    display(C, n, universal);
+
+    difference(A, B, C, n);
+    printf("A-B =");
+    display(C, n, universal);
+
+    return 0;
 }
